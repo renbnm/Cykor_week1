@@ -46,6 +46,15 @@ void func3(int arg1);
     현재 call_stack 전체를 출력합니다.
     해당 함수의 출력 결과들을 바탕으로 구현 완성도를 평가할 예정입니다.
 */
+void push(int *SP, int element, char info[]){
+    call_stack[++*SP] = element;
+    strcpy(stack_info[*SP], info);
+}
+
+void pop(int *SP){
+    *SP--;
+}
+
 void print_stack()
 {
     if (SP == -1)
@@ -80,21 +89,16 @@ void func1(int arg1, int arg2, int arg3)
     int var_1 = 100;
 
     // func1의 스택 프레임 형성 (함수 프롤로그 + push)
-    call_stack[++SP] = arg3;
-    strcpy(stack_info[SP], "arg3");
-    call_stack[++SP] = arg2;
-    strcpy(stack_info[SP], "arg2");
-    call_stack[++SP] = arg1;
-    strcpy(stack_info[SP], "arg1");
+    push(&SP, arg3, "arg3");
+    push(&SP, arg2, "arg2");
+    push(&SP, arg1, "arg1");
 
-    call_stack[++SP] = -1; //Return Adress
-    strcpy(stack_info[SP], "Return Address");
-    call_stack[++SP] = FP; //SFP
-    strcpy(stack_info[SP], "func1 SFP");
+    
+    push(&SP, -1, "Return Address");
+    push(&SP, FP, "func1 SFP");
     FP = SP;
 
-    call_stack[++SP] = var_1;
-    strcpy(stack_info[SP], "var1");
+    push(&SP, var_1, "var1");
 
     print_stack();
     func2(11, 13);
@@ -110,18 +114,14 @@ void func2(int arg1, int arg2)
     int var_2 = 200;
 
     // func2의 스택 프레임 형성 (함수 프롤로그 + push)
-    call_stack[++SP] = arg2;
-    strcpy(stack_info[SP], "arg2");
-    call_stack[++SP] = arg1;
-    strcpy(stack_info[SP], "arg1");
-    call_stack[++SP] = -1; // Return Adress
-    strcpy(stack_info[SP], "Return Address");
-    call_stack[++SP] = FP; //SFP
-    strcpy(stack_info[SP], "func2 SFP");
+    
+    push(&SP, arg2, "arg2");
+    push(&SP, arg1, "arg1");
+    push(&SP, -1, "Return Address");
+    push(&SP, FP, "func2 SFP");
     FP = SP;
 
-    call_stack[++SP] = var_2;
-    strcpy(stack_info[SP], "var2");
+    push(&SP, var_2, "var3");
 
     print_stack();
     func3(77);
@@ -138,19 +138,15 @@ void func3(int arg1)
     int var_4 = 400;
 
     // func3의 스택 프레임 형성 (함수 프롤로그 + push)
-    call_stack[++SP] = arg1;
-    strcpy(stack_info[SP], "arg1");
-    call_stack[++SP] = -1; //Return Adress
-    strcpy(stack_info[SP], "Return Address");
-    call_stack[++SP] = FP; //SFP
-    strcpy(stack_info[SP], "func3 SFP");
+    
+    push(&SP, arg1, "arg1");
+    push(&SP, -1, "Return Address");
+    push(&SP, FP, "func3 SFP");
     FP = SP;
 
-    call_stack[++SP] = var_3;
-    strcpy(stack_info[SP], "var_3");
-    call_stack[++SP] = var_4;
-    strcpy(stack_info[SP], "var_4");
     
+    push(&SP, var_3, "var3");
+    push(&SP, var_4, "var4");
     print_stack();
 }
 
