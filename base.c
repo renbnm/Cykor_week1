@@ -46,13 +46,13 @@ void func3(int arg1);
     현재 call_stack 전체를 출력합니다.
     해당 함수의 출력 결과들을 바탕으로 구현 완성도를 평가할 예정입니다.
 */
-void push(int *SP, int element, char info[]){
-    call_stack[++*SP] = element;
-    strcpy(stack_info[*SP], info);
+void push(int element, char info[]){
+    call_stack[++SP] = element;
+    strcpy(stack_info[SP], info);
 }
 
-void pop(int *SP){
-    *SP -= 1;
+void pop(){
+    SP -= 1;
 }
 
 void print_stack()
@@ -89,26 +89,26 @@ void func1(int arg1, int arg2, int arg3)
     int var_1 = 100;
 
     // func1의 스택 프레임 형성 (함수 프롤로그 + push)
-    push(&SP, arg3, "arg3");
-    push(&SP, arg2, "arg2");
-    push(&SP, arg1, "arg1");
+    push(arg3, "arg3");
+    push(arg2, "arg2");
+    push(arg1, "arg1");
 
     
-    push(&SP, -1, "Return Address");
-    push(&SP, FP, "func1 SFP");
+    push(-1, "Return Address");
+    push(FP, "func1 SFP");
     FP = SP;
 
-    push(&SP, var_1, "var1");
+    push(var_1, "var1");
 
     print_stack();
     func2(11, 13);
     // func2의 스택 프레임 제거 (함수 에필로그 + pop)
     SP = FP;
     FP = call_stack[SP--];
-    pop(&SP);
+    pop();
 
-    pop(&SP);
-    pop(&SP);
+    pop();
+    pop();
     print_stack();
 }
 
@@ -119,22 +119,22 @@ void func2(int arg1, int arg2)
 
     // func2의 스택 프레임 형성 (함수 프롤로그 + push)
     
-    push(&SP, arg2, "arg2");
-    push(&SP, arg1, "arg1");
-    push(&SP, -1, "Return Address");
-    push(&SP, FP, "func2 SFP");
+    push(arg2, "arg2");
+    push(arg1, "arg1");
+    push(-1, "Return Address");
+    push(FP, "func2 SFP");
     FP = SP;
 
-    push(&SP, var_2, "var3");
+    push(var_2, "var3");
 
     print_stack();
     func3(77);
     // func3의 스택 프레임 제거 (함수 에필로그 + pop)
     SP = FP;
     FP = call_stack[SP--];
-    pop(&SP);
+    pop();
 
-    pop(&SP);
+    pop();
     print_stack();
 }
 
@@ -146,14 +146,14 @@ void func3(int arg1)
 
     // func3의 스택 프레임 형성 (함수 프롤로그 + push)
     
-    push(&SP, arg1, "arg1");
-    push(&SP, -1, "Return Address");
-    push(&SP, FP, "func3 SFP");
+    push(arg1, "arg1");
+    push(-1, "Return Address");
+    push(FP, "func3 SFP");
     FP = SP;
 
     
-    push(&SP, var_3, "var3");
-    push(&SP, var_4, "var4");
+    push(var_3, "var3");
+    push(var_4, "var4");
     print_stack();
 }
 
@@ -165,11 +165,11 @@ int main()
     // func1의 스택 프레임 제거 (함수 에필로그 + pop)
     SP = FP;
     FP = call_stack[SP--];
-    pop(&SP);
+    pop();
 
-    pop(&SP);
-    pop(&SP);
-    pop(&SP);
+    pop();
+    pop();
+    pop();
     print_stack();
     return 0;
 }
