@@ -21,6 +21,7 @@
     ========================================================================
 */
 #include <stdio.h>
+#include <string.h>
 #define STACK_SIZE 50 // 최대 스택 크기
 
 int     call_stack[STACK_SIZE];         // Call Stack을 저장하는 배열
@@ -79,9 +80,27 @@ void func1(int arg1, int arg2, int arg3)
     int var_1 = 100;
 
     // func1의 스택 프레임 형성 (함수 프롤로그 + push)
+    call_stack[++SP] = arg3;
+    strcpy(stack_info[SP], "arg3");
+    call_stack[++SP] = arg2;
+    strcpy(stack_info[SP], "arg2");
+    call_stack[++SP] = arg1;
+    strcpy(stack_info[SP], "arg1");
+
+    call_stack[++SP] = -1; //Return Adress
+    strcpy(stack_info[SP], "Return Address");
+    call_stack[++SP] = FP; //SFP
+    strcpy(stack_info[SP], "func1 SFP");
+    FP = SP;
+
+    call_stack[++SP] = var_1;
+    strcpy(stack_info[SP], "var1");
+
     print_stack();
     func2(11, 13);
     // func2의 스택 프레임 제거 (함수 에필로그 + pop)
+    SP = FP;
+    FP = call_stack[SP--];
     print_stack();
 }
 
@@ -91,9 +110,24 @@ void func2(int arg1, int arg2)
     int var_2 = 200;
 
     // func2의 스택 프레임 형성 (함수 프롤로그 + push)
+    call_stack[++SP] = arg2;
+    strcpy(stack_info[SP], "arg2");
+    call_stack[++SP] = arg1;
+    strcpy(stack_info[SP], "arg1");
+    call_stack[++SP] = -1; // Return Adress
+    strcpy(stack_info[SP], "Return Address");
+    call_stack[++SP] = FP; //SFP
+    strcpy(stack_info[SP], "func2 SFP");
+    FP = SP;
+
+    call_stack[++SP] = var_2;
+    strcpy(stack_info[SP], "var2");
+
     print_stack();
     func3(77);
     // func3의 스택 프레임 제거 (함수 에필로그 + pop)
+    SP = FP;
+    FP = call_stack[SP--];
     print_stack();
 }
 
@@ -104,6 +138,19 @@ void func3(int arg1)
     int var_4 = 400;
 
     // func3의 스택 프레임 형성 (함수 프롤로그 + push)
+    call_stack[++SP] = arg1;
+    strcpy(stack_info[SP], "arg1");
+    call_stack[++SP] = -1; //Return Adress
+    strcpy(stack_info[SP], "Return Address");
+    call_stack[++SP] = FP; //SFP
+    strcpy(stack_info[SP], "func3 SFP");
+    FP = SP;
+
+    call_stack[++SP] = var_3;
+    strcpy(stack_info[SP], "var_3");
+    call_stack[++SP] = var_4;
+    strcpy(stack_info[SP], "var_4");
+    
     print_stack();
 }
 
