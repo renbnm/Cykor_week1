@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/renbn/OneDrive/바탕 화면/Cykor/week1/Cykor_week1",
-      "program": "c:/Users/renbn/OneDrive/바탕 화면/Cykor/week1/Cykor_week1/build/Debug/outDebug",
+      "cwd": "C:/Cykor/week1/Cykor_week1",
+      "program": "C:/Cykor/week1/Cykor_week1/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
