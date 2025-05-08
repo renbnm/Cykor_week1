@@ -52,7 +52,7 @@ void push(int *SP, int element, char info[]){
 }
 
 void pop(int *SP){
-    *SP--;
+    *SP -= 1;
 }
 
 void print_stack()
@@ -105,6 +105,10 @@ void func1(int arg1, int arg2, int arg3)
     // func2의 스택 프레임 제거 (함수 에필로그 + pop)
     SP = FP;
     FP = call_stack[SP--];
+    pop(&SP);
+
+    pop(&SP);
+    pop(&SP);
     print_stack();
 }
 
@@ -128,6 +132,9 @@ void func2(int arg1, int arg2)
     // func3의 스택 프레임 제거 (함수 에필로그 + pop)
     SP = FP;
     FP = call_stack[SP--];
+    pop(&SP);
+
+    pop(&SP);
     print_stack();
 }
 
@@ -156,6 +163,13 @@ int main()
 {
     func1(1, 2, 3);
     // func1의 스택 프레임 제거 (함수 에필로그 + pop)
+    SP = FP;
+    FP = call_stack[SP--];
+    pop(&SP);
+
+    pop(&SP);
+    pop(&SP);
+    pop(&SP);
     print_stack();
     return 0;
 }
